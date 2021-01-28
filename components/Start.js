@@ -12,17 +12,18 @@ export default class Start extends Component {
     }
 
     render() {
-
+        // const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0
         return (
             <ImageBackground style={styles.imgBackground} resizeMode='cover' source={require('../assets/bgImg.png')}>
-                <View
+                <KeyboardAvoidingView
+                    behavior='padding'
                     style={styles.container}
                     title='Chat App'
                 >
                     <Text style={styles.title}>Welcome to the Chat App</Text>
-                    <KeyboardAvoidingView
+                    <View
                         style={styles.box}
-                        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+
                     >
                         <View style={styles.inputContainer}>
                             <TextInput
@@ -56,25 +57,26 @@ export default class Start extends Component {
                             >
                             </TouchableOpacity>
                         </View>
-                         {/* <Text>Chosen Color:</Text>
+                         <Text style={styles.chosenColorText}>Chosen Color:</Text>
                          <View style={{
                                 backgroundColor: this.state.bgColor,
                                 borderWidth: 1,
                                 borderColor: '#2A323C',
                                 borderRadius: 5,
-                                width: 100,
-                            height: 20,
-                                marginTop: 10,
+                                width: '25%',
+                                height: 20,
+                                marginBottom: 10,
+                                marginLeft: 20,
                             }}>
-                        </View> */}
+                        </View>
                         <TouchableOpacity style={styles.buttonContainer}>
                             <Text
                                 style={styles.chatButton}
                                 onPress={() => this.props.navigation.navigate('Chat', { name: this.state.name, bgColor: this.state.bgColor })}>Start Chatting
                             </Text>
                         </TouchableOpacity>
-                    </KeyboardAvoidingView>
-                </View>
+                    </View>
+                </KeyboardAvoidingView>
         </ImageBackground>
         );
     }
@@ -105,7 +107,6 @@ const styles = StyleSheet.create({
         margin: 20,
         padding: 10,
         width: '88%',
-        height: '43%',
         backgroundColor: '#fff',
         textAlign: 'left',
         position: 'absolute',
@@ -119,6 +120,12 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginBottom: 10,
         marginLeft: 20,
+    },
+    chosenColorText: {
+        marginBottom: 10,
+        marginLeft: 20,
+        color: '#757083',
+        fontWeight: '300',
     },
     textInput: {
         height: 50,
@@ -138,7 +145,7 @@ const styles = StyleSheet.create({
     inputContainer: {
         flex: 0.3,
         width: '100%',
-        marginBottom: 40,
+        marginBottom: 10,
     },
     bgColorContainer: {
         flex: 0.5,
@@ -191,9 +198,9 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: 'transparent',
         borderRadius: 1,
-        marginTop: 20,
         marginRight: 'auto',
         marginLeft: 'auto',
+        marginBottom: 10,
     }
 
 

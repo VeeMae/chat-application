@@ -48,7 +48,7 @@ export default class Chat extends Component {
                 {...props}
                 wrapperStyle={{
                     right: {
-                        backgroundColor: '#000'
+                        backgroundColor: '#556062'
                     },
                     left: {
                         backgroundColor: '#fff'
@@ -66,10 +66,11 @@ export default class Chat extends Component {
                 containerStyle={{
                     marginBottom: 15,
                     backgroundColor: '#fff',
-                    width: '25%',
+                    width: 'auto',
                     marginLeft: 'auto',
                     marginRight: 'auto',
-                    borderRadius: 10
+                    borderRadius: 5,
+                    padding: 5
                 }}
                 textStyle={{
                     color: '#000',
@@ -85,12 +86,13 @@ export default class Chat extends Component {
             <SystemMessage
                 {...props}
                 containerStyle={{
-                    marginBottom: 15,
+                    marginBottom: 30,
                     backgroundColor: '#fff',
-                    width: '50%',
+                    width: 'auto',
                     marginLeft: 'auto',
                     marginRight: 'auto',
-                    borderRadius: 10
+                    borderRadius: 5,
+                    padding: 5
                 }}
                 textStyle={{
                     fontSize: 14,

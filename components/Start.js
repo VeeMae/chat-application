@@ -12,7 +12,7 @@ export default class Start extends Component {
     }
 
     render() {
-        const keyboardVerticalOffset = Platform.OS === 'ios' ? 50 : 10
+        const keyboardVerticalOffset = Platform.OS === 'ios' ? 50 : 'height'
         return (
             <ImageBackground style={styles.imgBackground} resizeMode='cover' source={require('../assets/bgImg.png')}>
                 <KeyboardAvoidingView

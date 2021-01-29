@@ -12,11 +12,12 @@ export default class Start extends Component {
     }
 
     render() {
-        // const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0
+        const keyboardVerticalOffset = Platform.OS === 'ios' ? 50 : 10
         return (
             <ImageBackground style={styles.imgBackground} resizeMode='cover' source={require('../assets/bgImg.png')}>
                 <KeyboardAvoidingView
-                    behavior='padding'
+                    behavior='height'
+                    keyboardVerticalOffset={keyboardVerticalOffset}
                     style={styles.container}
                     title='Chat App'
                 >
@@ -37,21 +38,37 @@ export default class Start extends Component {
                         <Text style={styles.text}>Choose Background Color:</Text>
                         <View style={styles.bgColorContainer}>
                             <TouchableOpacity
+                                accessible={true}
+                                accessibilityLabel="Background color that's a shade of black."
+                                accessibilityHint="Lets you choose which color to set the chat background to."
+                                accessibilityRole="button"
                                 style={styles.circle1}
                                 onPress={() => this.setState({bgColor: '#090C08'})}
                             >
                             </TouchableOpacity>
                             <TouchableOpacity
+                                accessible={true}
+                                accessibilityLabel="Background color that's a dark shade of purple."
+                                accessibilityHint="Lets you choose which color to set the chat background to."
+                                accessibilityRole="button"
                                 style={styles.circle2}
                                 onPress={() => this.setState({ bgColor: '#474056' })}
                             >
                             </TouchableOpacity>
                             <TouchableOpacity
+                                accessible={true}
+                                accessibilityLabel="Background color that's a shade of light blue."
+                                accessibilityHint="Lets you choose which color to set the chat background to."
+                                accessibilityRole="button"
                                 style={styles.circle3}
                                 onPress={() => this.setState({bgColor: '#8A95A5'})}
                             >
                             </TouchableOpacity>
                             <TouchableOpacity
+                                accessible={true}
+                                accessibilityLabel="Background color that's a shade of light green."
+                                accessibilityHint="Lets you choose which color to set the chat background to."
+                                accessibilityRole="button"
                                 style={styles.circle4}
                                 onPress={() => this.setState({bgColor: '#B9C6AE'})}
                             >
@@ -69,7 +86,13 @@ export default class Start extends Component {
                                 marginLeft: 20,
                             }}>
                         </View>
-                        <TouchableOpacity style={styles.buttonContainer}>
+                        <TouchableOpacity
+                            accessible={true}
+                            accessibilityLabel="Start Chatting button."
+                            accessibilityHint="Lets you move to the chat page to start sending messages."
+                            accessibilityRole="button"
+                            style={styles.buttonContainer}
+                        >
                             <Text
                                 style={styles.chatButton}
                                 onPress={() => this.props.navigation.navigate('Chat', { name: this.state.name, bgColor: this.state.bgColor })}>Start Chatting

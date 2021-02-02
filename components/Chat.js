@@ -10,14 +10,7 @@ export default class Chat extends Component {
         super(props);
         this.state = {
             messages: [],
-            // user: {
-            //     _id: '',
-            //     name: '',
-            //     avatar: '',
-            //     createdAt: ''
-            // },
             uid: 0,
-            _id: '',
             loggedInText: 'Please wait while we fetch your data...'
         };
 
@@ -67,8 +60,6 @@ export default class Chat extends Component {
             this.referenceChatUser = firebase.firestore().collection('messages').where('uid', '==', this.state.uid);
             // listen for collection changes for current user
             this.unsubscribeChatUser = this.referenceChatUser.orderBy('createdAt', 'desc').onSnapshot(this.onCollectionUpdate);
-
-            // this.unsubscribe = this.referenceChatMessages.orderBy("createdAt", "desc").onSnapshot(this.onCollectionUpdate);
         })
 
         // this.setState({

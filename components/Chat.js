@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, KeyboardAvoidingView, View, Platform } from 'react-native';
+import { StyleSheet, KeyboardAvoidingView, View, Platform, Text } from 'react-native';
 import { Bubble, Day, GiftedChat, SystemMessage } from 'react-native-gifted-chat';
 
 const firebase = require('firebase');
@@ -10,7 +10,15 @@ export default class Chat extends Component {
         super(props);
         this.state = {
             messages: [],
+            // user: {
+            //     _id: '',
+            //     name: '',
+            //     avatar: '',
+            //     createdAt: ''
+            // },
             uid: 0,
+            _id: '',
+            loggedInText: 'Please wait while we fetch your data...'
         };
 
         //   Initialize Firestore app and connect to Firestore database
@@ -35,6 +43,10 @@ export default class Chat extends Component {
     }
 
     componentDidMount() {
+        let name = this.props.route.params.name;
+        this.props.navigation.setOptions({ title: name });
+
+        // Upon loading, check whether the user is signed in. If not, create a new user.
         this.authUnsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
             if (!user) {
                 await firebase.auth().signInAnonymously();
@@ -42,28 +54,33 @@ export default class Chat extends Component {
             this.setState(
                 {
                     user: {
-                        uid: user.uid,
-                        avatar: 'https://placeimg.com/140/140/any'
+                        _id: user.uid,
+                        avatar: 'https://placeimg.com/140/140/any',
+                        name
                     },
-                    messages: []
+                    messages: [],
+                    loggedInText: `${this.props.route.params.name} is now in the chat room`
                 }
             );
 
+            // Reference to the active user's messages
             this.referenceChatUser = firebase.firestore().collection('messages').where('uid', '==', this.state.uid);
-
+            // listen for collection changes for current user
             this.unsubscribeChatUser = this.referenceChatUser.orderBy('createdAt', 'desc').onSnapshot(this.onCollectionUpdate);
+
+            // this.unsubscribe = this.referenceChatMessages.orderBy("createdAt", "desc").onSnapshot(this.onCollectionUpdate);
         })
 
-        this.setState({
-            messages: [
-                {
-                    _id: 2,
-                    text: `${this.props.route.params.name} has entered the chat!`,
-                    createdAt: new Date(),
-                    system: true,
-                },
-            ]
-        })
+        // this.setState({
+        //     messages: [
+        //         {
+        //             _id: 2,
+        //             text: `${this.props.route.params.name} has entered the chat!`,
+        //             createdAt: new Date(),
+        //             system: true,
+        //         },
+        //     ]
+        // })
     }
 
     componentWillUnmount() {
@@ -73,6 +90,7 @@ export default class Chat extends Component {
     };
 
 
+    // Retrieves the current data in messages collection and stores it in the messages state, allowing the data to be rendered in the view.
     onCollectionUpdate = (querySnapshot) => {
         const messages = [];
         querySnapshot.forEach((doc) => {
@@ -81,7 +99,7 @@ export default class Chat extends Component {
                 _id: data._id,
                 createdAt: data.createdAt.toDate(),
                 text: data.text,
-                user: data.user
+                user: data.user,
             });
         });
         this.setState({
@@ -186,19 +204,14 @@ export default class Chat extends Component {
                     backgroundColor: this.props.route.params.bgColor,
                 }}
             >
+                <Text style={styles.systemText}>{this.state.loggedInText}</Text>
                 <GiftedChat
                     renderBubble={this.renderBubble}
                     renderSystemMessage={this.renderSystemMessage}
                     renderDay={this.renderDay}
                     messages={this.state.messages}
                     onSend={messages => this.onSend(messages)}
-                    user={
-                        {
-                            _id: this.state.uid,
-                            name: this.props.route.params.name,
-                            avatar: 'https://placeimg.com/140/140/any'
-                        }
-                    }
+                    user={this.state.user}
                 />
 
                 {/* Fix keyboard covering message input field */}
@@ -208,3 +221,13 @@ export default class Chat extends Component {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    systemText: {
+        backgroundColor: '#fff',
+        fontSize: 10,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        padding: 2
+    }
+})

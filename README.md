@@ -36,7 +36,7 @@ As a user with a visual impairment, I want to use a chat app that is compatoble 
 
 ### Database Configuration
 
-The Chat Application uses Google Firebase to store chat messages, images, and locations. Please follow the instructions below to configure your own Firebase storage. For detailed assistance, please visit `https://firebase.google.com/docs/web/setup`
+The Chat Application uses Google Firebase to store chat messages, images, and locations. Please follow the instructions below to configure your own Firebase storage if you'd like to demo the app with an empty database. For detailed assistance, please visit `https://firebase.google.com/docs/web/setup`
 <br/>
 
 - Go to `https://console.firebase.google.com/` and sign in with a Google account via the top right corner.
@@ -49,6 +49,8 @@ The Chat Application uses Google Firebase to store chat messages, images, and lo
 - Click <strong>Done</strong>.
 - Still inside the <strong>Cloud Firestore</strong> page, click on <strong>Start collection</strong>.
 - Name the collection `messages` and input `1` for the Document ID. Fill in the rest of the document with this information (use a string for avatar, text, and user): `_id: 1` `avatar: https://placeimg.com/140/140/any` `createdAt: January 31, 2021 at 8:13:20 PM UTC-8` `text: Hello developer` `uid: 0` `user: React Native`
+- In order to allow for authentication, click on <strong>Authentication</strong> right above <strong>Cloud Firestore</strong> in the left panel.
+- Under the <strong>Sign-in method</strong> tab, go to the `Anonymous` row in the <strong>Sign-in providers</strong> section. Click `Enable` so that users can be authenticated anonymously. Click <strong>Save</strong>.
 - In order to connect your own credentials from Firebase to the Chat Application, click on <strong>Project Settings</strong> by clicking on the gear icon at the top in the left panel.
 - Inside the <strong>General Tab</strong>, in the `Your Apps` section at the bottom, click on the icon for the web `</>`
 - You will register your app in order to get the configurations needed to connect your new database with the Chat Application.

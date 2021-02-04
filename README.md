@@ -19,9 +19,20 @@ As a user, I want to be able to read my messages offline so I can reread convers
 As a user with a visual impairment, I want to use a chat app that is compatoble with a screen reader so that I can engage with a chat interface.
 <br/>
 
+## Tools
+
+- React Native
+- Expo CLI
+- Google Firestore Database
+- GiftedChat
+- JavaScript
+- Expo Go
+- Android Studio
+- Visual Studio Code
+
 ## Installation
 
-### Downloading a Simulator
+### Download a Simulator
 
 - Make sure to install a simulator. [Android Studio](https://developer.android.com/studio) for Windows. [XCode](https://developer.apple.com/xcode/) for Mac.
 - To demo the app on your phone, install the <strong>Expo Go</strong> app through Google Play or Apple Store.

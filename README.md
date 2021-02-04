@@ -2,7 +2,7 @@
 
 This project is a chat application for mobile devices using React Native. The app provides users with a chat interface and options to share images and their location.
 
-![Chat Application Demo](/Chat-App.gif)
+![Chat Application Demo](/ChatApp.gif)
 
 ## User Stories
 

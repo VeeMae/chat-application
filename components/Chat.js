@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { StyleSheet, KeyboardAvoidingView, View, Platform, Text } from 'react-native';
+import { StyleSheet, KeyboardAvoidingView, View, Platform, Text, LogBox } from 'react-native';
 import { Bubble, Day, GiftedChat, SystemMessage, InputToolbar } from 'react-native-gifted-chat';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
+import CustomActions from './CustomActions';
+import MapView from 'react-native-maps';
 
 const firebase = require('firebase');
 require('firebase/firestore');
@@ -14,8 +16,12 @@ export default class Chat extends Component {
             messages: [],
             uid: 0,
             loggedInText: 'Please wait while we fetch your data...',
-            isConnected: false
+            isConnected: false,
+            image: '',
+            location: ''
         };
+
+        LogBox.ignoreAllLogs();
 
         //   Initialize Firestore app and connect to Firestore database
         const firebaseConfig = {
@@ -145,6 +151,8 @@ export default class Chat extends Component {
                 createdAt: data.createdAt.toDate(),
                 text: data.text,
                 user: data.user,
+                image: data.image || null,
+                location: data.location || null
             });
         });
         this.setState({
@@ -161,7 +169,9 @@ export default class Chat extends Component {
             createdAt: messages.createdAt,
             text: messages.text,
             user: messages.user,
-            uid: this.state.uid
+            uid: this.state.uid,
+            image: messages.image || null,
+            location: messages.location || null
         })
     }
 
@@ -248,6 +258,32 @@ export default class Chat extends Component {
         )
     }
 
+    renderCustomActions = (props) => {
+        return <CustomActions {...props} />;
+    };
+
+    renderCustomView (props) {
+        const { currentMessage } = props;
+        if (currentMessage.location) {
+            return (
+                <MapView
+                    style={{width: 150,
+                    height: 100,
+                    borderRadius: 13,
+                    margin: 3
+                    }}
+                    showsUserLocation={true}
+                    region={{
+                    latitude: currentMessage.location.latitude,
+                    longitude: currentMessage.location.longitude,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
+                    }}
+                />
+            );
+        }
+        return null;
+    }
 
     render() {
         let name = this.props.route.params.name;
@@ -267,9 +303,13 @@ export default class Chat extends Component {
                     renderSystemMessage={this.renderSystemMessage}
                     renderDay={this.renderDay}
                     renderInputToolbar={this.renderInputToolbar.bind(this)}
+                    renderActions={this.renderCustomActions}
+                    renderCustomView={this.renderCustomView}
                     messages={this.state.messages}
                     onSend={messages => this.onSend(messages)}
                     user={this.state.user}
+                    renderUsernameOnMessage={true}
+                    image={this.state.image}
                 />
 
                 {/* Fix keyboard covering message input field */}
